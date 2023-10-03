@@ -1,0 +1,2 @@
+class CinnectionError(Exception):
+    pass
