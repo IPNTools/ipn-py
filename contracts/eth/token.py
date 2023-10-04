@@ -8,12 +8,24 @@ ERC20_ABI = json.loads(
 
 class ERC20:
     def __init__(self, w3: Web3, contract_address: str) -> None:
+        """
+        A base class for interacting with contracts implementing the ERC20 interface
+
+        :param w3: Web3 client
+        :param contract_address: token contract address implementing the ERC20 interface
+        """
         self.contract_address = w3.to_checksum_address(contract_address)
         self._w3 = w3
         self._contract = self._w3.eth.contract(self.contract_address, abi=ERC20_ABI)
         self._functions = self._contract.functions
 
     def _build_erc20_transaction(self, from_address: str) -> dict[str, int | str]:
+        """
+        A private system function for creating a native transaction
+
+        :param from_address: sender's wallet address
+        :return: dictionary with transaction information
+        """
         nonce = self._w3.eth.get_transaction_count(self._w3.to_checksum_address(from_address), 'pending')
 
         transaction = {
@@ -33,6 +45,15 @@ class ERC20:
                  from_address: str,
                  to_address: str,
                  amount: int) -> str:
+        """
+        Using the transfer, sends the ERC20 token to another address
+
+        :param private_key: private key from the wallet
+        :param from_address: sender's wallet address
+        :param to_address: recipient's wallet address
+        :param amount: the amount of currency being transferred
+        :return: address transaction
+        """
 
         transaction = (self._functions.transfer(to_address, amount)
                        .build_transaction(self._build_erc20_transaction(from_address)))
@@ -42,8 +63,10 @@ class ERC20:
         return send.hex()
 
     def balance_of(self, address: str) -> int:
+        """
+        Get the balance of the ERC20 token in the EVM network.
+
+        :param address: wallet address
+        :return: the balance of the selected wallet
+        """
         return self._functions.balanceOf(address).call()
-
-
-# w3 = Web3(Web3.HTTPProvider())
-# ERC20 = ERC20()

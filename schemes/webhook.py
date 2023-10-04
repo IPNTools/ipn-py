@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import List
 from pydantic import BaseModel, Field
 from enums import WebhookEventType
@@ -27,6 +28,3 @@ class WebhookData(BaseModel):
 
     def __init__(self, data: dict, **kwargs) -> None:
         super().__init__(**data, **kwargs)
-
-
-
