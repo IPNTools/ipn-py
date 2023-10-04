@@ -1,6 +1,10 @@
+import json
+
 from tronpy import Tron
 from tronpy.keys import PrivateKey
 from tronpy.tron import TAddress
+
+from contracts.tron.abi import TRC20_ABI
 
 
 class TRC20:
@@ -14,6 +18,7 @@ class TRC20:
         self.contract_address = contract_address
         self._client = client
         self._contract = self._client.get_contract(self.contract_address)
+        self._contract.abi = json.loads(TRC20_ABI)
         self._functions = self._contract.functions
 
     def get_decimals(self) -> int:
