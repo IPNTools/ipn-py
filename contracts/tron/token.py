@@ -1,4 +1,5 @@
 import json
+from typing import Union
 
 from tronpy import Tron
 from tronpy.keys import PrivateKey
@@ -8,7 +9,7 @@ from contracts.tron.abi import TRC20_ABI
 
 
 class TRC20:
-    def __init__(self, client: Tron, contract_address: str | TAddress) -> None:
+    def __init__(self, client: Tron, contract_address: Union[str, TAddress]) -> None:
         """
         A base class for interacting with contracts implementing the TRC20 interface
 

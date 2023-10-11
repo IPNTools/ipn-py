@@ -16,24 +16,6 @@ class ERC20:
         self._contract = self._w3.eth.contract(self.contract_address, abi=json.loads(ERC20_ABI))
         self._functions = self._contract.functions
 
-    def _build_erc20_transaction(self, from_address: str) -> dict[str, int | str]:
-        """
-        A private system function for creating a native transaction
-
-        :param from_address: sender's wallet address
-        :return: dictionary with transaction information
-        """
-        nonce = self._w3.eth.get_transaction_count(self._w3.to_checksum_address(from_address), 'pending')
-
-        transaction = {
-            'chainId': self._w3.eth.chain_id,
-            'gas': 1_000_000,
-            'gasPrice': self._w3.eth.gas_price,
-            'nonce': nonce,
-            'from': from_address,
-        }
-        return transaction
-
     def get_decimals(self) -> int:
         return self._functions.decimals().call()
 
@@ -52,8 +34,21 @@ class ERC20:
         :return: address transaction
         """
 
-        transaction = (self._functions.transfer(to_address, amount)
-                       .build_transaction(self._build_erc20_transaction(from_address)))
+        valid_address = self._w3.to_checksum_address(from_address)
+        nonce = self._w3.eth.get_transaction_count(valid_address, 'pending')
+
+        transaction_info = {
+            'chainId': self._w3.eth.chain_id,
+            'gas': 1_000_000,
+            'gasPrice': self._w3.eth.gas_price,
+            'nonce': nonce,
+            'from': valid_address,
+        }
+
+        transaction = (
+            self._functions.transfer(self._w3.to_checksum_address(to_address), amount)
+            .build_transaction(transaction_info)
+        )
 
         signed_transaction = self._w3.eth.account.sign_transaction(transaction, private_key)
         send = self._w3.eth.send_raw_transaction(signed_transaction.rawTransaction)

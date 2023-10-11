@@ -1,7 +1,6 @@
-from dataclasses import dataclass
 from typing import List
 from pydantic import BaseModel, Field
-from enums import WebhookEventType
+from schemes.enums import WebhookEventType
 
 
 class Log(BaseModel):
