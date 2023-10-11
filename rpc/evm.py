@@ -1,16 +1,12 @@
-import json
-from typing import Optional
+from typing import Optional, Union
 from web3 import Web3
 from contracts.eth.token import ERC20
-from enums import RPC_URL
+from rpc.enums import RpcUrl
 from exceptions import ConnectionError
 
 
-ERC20_ABI = json.loads('''[{"inputs":[{"internalType":"string","name":"_name","type":"string"},{"internalType":"string","name":"_symbol","type":"string"},{"internalType":"uint256","name":"_initialSupply","type":"uint256"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"decimals_","type":"uint8"}],"name":"setupDecimals","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"}]''')
-
-
 class EvmJsonRPC:
-    def __init__(self, rpc_url: Optional[RPC_URL | str]) -> None:
+    def __init__(self, rpc_url: Optional[Union[RpcUrl, str]]) -> None:
         """
         A class for interacting with EVM networks. You can use the RPC_URL class to connect, or take the address for
         example https://chainlist.org
@@ -27,7 +23,7 @@ class EvmJsonRPC:
                                   from_address: str,
                                   to_address: str,
                                   amount: float
-                                  ) -> dict[str, int | str]:
+                                  ) -> dict[str, Union[int, str]]:
         """
         A private system function for creating a native transaction
 
@@ -39,12 +35,13 @@ class EvmJsonRPC:
         gas_price = self._w3.eth.gas_price
         gas = 1_000_000
 
-        nonce = self._w3.eth.get_transaction_count(self._w3.to_checksum_address(from_address), 'pending')
+        valid_from_address = self._w3.to_checksum_address(from_address)
+        nonce = self._w3.eth.get_transaction_count(valid_from_address, 'pending')
 
         transaction = {
             'chainId': self._w3.eth.chain_id,
-            'from': from_address,
-            'to': to_address,
+            'from': valid_from_address,
+            'to': self._w3.to_checksum_address(to_address),
             'value': int(Web3.to_wei(amount, 'ether')),
             'nonce': nonce,
             'gasPrice': gas_price,
@@ -124,11 +121,19 @@ class EvmJsonRPC:
         :param amount: the amount of currency being transferred
         :return: address transaction
         """
-        transaction = self._build_native_transaction(from_address=from_address,
-                                                     to_address=to_address,
-                                                     amount=amount,
-                                                     )
+        valid_from_address = self._w3.to_checksum_address(from_address)
+        nonce = self._w3.eth.get_transaction_count(valid_from_address, 'pending')
 
-        signed_transaction = self._w3.eth.account.sign_transaction(transaction, private_key)
+        transaction_info = {
+            'chainId': self._w3.eth.chain_id,
+            'from': valid_from_address,
+            'to': self._w3.to_checksum_address(to_address),
+            'value': int(Web3.to_wei(amount, 'ether')),
+            'nonce': nonce,
+            'gasPrice': self._w3.eth.gas_price,
+            'gas': 21000,
+        }
+
+        signed_transaction = self._w3.eth.account.sign_transaction(transaction_info, private_key)
         send = self._w3.eth.send_raw_transaction(signed_transaction.rawTransaction)
         return send.hex()
