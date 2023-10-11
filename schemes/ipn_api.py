@@ -6,7 +6,7 @@ from typing import List
 class Wallet:
     private_key: str
     tron_address: str
-    evm_address: str
+    eth_address: str
 
 
 @dataclass
