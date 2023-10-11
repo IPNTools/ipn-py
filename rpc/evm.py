@@ -23,35 +23,6 @@ class EvmJsonRPC:
         else:
             raise ConnectionError('Error connecting')
 
-    def _build_native_transaction(self,
-                                  from_address: str,
-                                  to_address: str,
-                                  amount: float
-                                  ) -> dict[str, int | str]:
-        """
-        A private system function for creating a native transaction
-
-        :param from_address: sender's wallet address
-        :param to_address: recipient's wallet address
-        :param amount: the amount of currency being transferred
-        :return: dictionary with transaction information
-        """
-        gas_price = self._w3.eth.gas_price
-        gas = 1_000_000
-
-        nonce = self._w3.eth.get_transaction_count(self._w3.to_checksum_address(from_address), 'pending')
-
-        transaction = {
-            'chainId': self._w3.eth.chain_id,
-            'from': from_address,
-            'to': to_address,
-            'value': int(Web3.to_wei(amount, 'ether')),
-            'nonce': nonce,
-            'gasPrice': gas_price,
-            'gas': gas,
-        }
-        return transaction
-
     def get_erc20_balance(self,
                           address: str,
                           contract_address: str,
