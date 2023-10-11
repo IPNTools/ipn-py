@@ -8,7 +8,6 @@ from requests import Response
 from exceptions import ValidationError, ConnectionError, BadRequestError
 from schemes.ipn_api import Wallet, AddressList
 
-
 API_URL = 'http://94.198.218.9:8100/upd_addr'
 
 
@@ -26,13 +25,13 @@ class IPNTools:
         account = Account.create()
 
         private_key = encode_hex(account.key)
-        evm_address = account.address.lower()
+        eth_address = account.address.lower()
 
-        ascii_address = f"41{evm_address[2:]}"
+        ascii_address = f"41{eth_address[2:]}"
         tron_address = base58.b58encode_check(bytes.fromhex(ascii_address)).decode("utf-8")
-        return Wallet(private_key, tron_address, evm_address)
+        return Wallet(private_key, tron_address, eth_address)
 
-    def add_address_in_API(self, address: str) -> AddressList:
+    def add_address(self, address: str) -> AddressList:
         """
         Add the selected address to the address list
 
@@ -47,7 +46,7 @@ class IPNTools:
         response = requests.put(API_URL, json=body)
         return self._response_analise(response)
 
-    def delete_address_in_API(self, address: str) -> AddressList:
+    def delete_address(self, address: str) -> AddressList:
         """
         Delete the selected address from the address list
 
@@ -62,11 +61,11 @@ class IPNTools:
         response = requests.delete(API_URL, json=body)
         return self._response_analise(response)
 
-    def replace_address_in_API(self, addresses: List[str]) -> AddressList:
+    def replace_address(self, addresses: List[str]) -> AddressList:
         """
         Replaces the entire existing list of addresses with the selected one
 
-        :param address: new list of addresses to replace
+        :param addresses: new list of addresses to replace
         :return: a dataclass with the parameters of the address list
         """
         body = {
@@ -77,7 +76,8 @@ class IPNTools:
         response = requests.post(API_URL, json=body)
         return self._response_analise(response)
 
-    def _response_analise(self, response: Response) -> AddressList:
+    @staticmethod
+    def _response_analise(response: Response) -> AddressList:
         if response.ok:
             result = response.json()
             return AddressList(result['name'], result['body'])

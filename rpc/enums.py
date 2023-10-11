@@ -1,19 +1,7 @@
 from enum import Enum
 
 
-class WebhookEventType(Enum):
-    NATIVE = "NT"
-    APPROVAL = "AP"
-    TRANSFER = "TR"
-    DEPOSIT = "DP"
-    WITHDRAWAL = "WD"
-    CUSTOM = "CU"
-
-    def __str__(self):
-        return self.value
-
-
-class RPC_URL(Enum):
+class RpcUrl(Enum):
     ULTRON = 'https://ultron-rpc.net'
     HARMONY = '	https://harmony.api.onfinality.io/public'
     GNOSIS = 'https://gnosis.blockpi.network/v1/rpc/public'
@@ -23,5 +11,5 @@ class RPC_URL(Enum):
     ETHEREUM = 'https://rpc.mevblocker.io'
     BINANCE = 'https://bsc-dataseed.binance.org/'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.value
