@@ -22,14 +22,14 @@ A modern, easy-to-use library for interacting with the [IPN](https://ipn.tools/)
 
 To install the library, use the command
 ```bash
-pip install upn-py
+pip install ipnpy
 ```
 
 To install the development version, do the following:
 
 ```bash
 git clone https://github.com/IPNTools/ipn-py
-cd ipn-py
+cd ipnpy
 ```
 
 ## Quick Example
@@ -39,9 +39,9 @@ Send transaction:
 ```python
 from rpc.evm import EvmJsonRPC
 
-evm = EvmJsonRPC('https://data-seed-prebsc-1-s2.binance.org:8545/')
-transaction = evm.send_native_token(
-    private_key='your private key',
+provider = EvmJsonRPC('https://data-seed-prebsc-1-s2.binance.org:8545/')
+transaction = provider.send_native_token(
+    private_key='YOUR_PRIVATE_KEY',
     from_address='0xdB87EE96B5D2D7F5b0e9eC400240D605f870756f',
     to_address='0xdB87EE96B5D2D7F5b0e9eC400240D605f870756f',
     amount=0.1,

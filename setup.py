@@ -18,7 +18,7 @@ dependencies = [
 ]
 
 setup(
-    name="ipn-py",
+    name="ipnpy",
     version=package_version,
     author="Daniil Shcherbakov",
     author_email="sherbakovdaniil6@gmail.com",
@@ -37,7 +37,10 @@ setup(
         'Operating System :: MacOS',
         'Operating System :: Microsoft :: Windows',
         'Operating System :: POSIX',
-        'Programming Language :: Python :: 3.9',
-        'Topic :: Software Development :: Libraries :: Python Modules',
+        "Natural Language :: English",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
     ],
 )
