@@ -44,7 +44,7 @@ transaction = provider.send_native_token(
     private_key='YOUR_PRIVATE_KEY',
     from_address='0xdB87EE96B5D2D7F5b0e9eC400240D605f870756f',
     to_address='0xdB87EE96B5D2D7F5b0e9eC400240D605f870756f',
-    amount=1,
+    amount=23000,
 )
 
 print(transaction)
@@ -55,7 +55,6 @@ Add, replace and delete address in [IPN](https://ipn.tools/):
 from ipnpy.ipn import IPNTools
 
 ipn = IPNTools(secret_key='YOUR_SECRET_KEY')
-send_native_token
 ipn.add_address('address4')
 ipn.replace_addresses(addresses=['address1', 'address2', 'address3'])
 ipn.delete_address('address3')
