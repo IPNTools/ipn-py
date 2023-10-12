@@ -3,7 +3,7 @@ from os.path import join, dirname
 from setuptools import setup, find_packages
 
 # reading package version (same way the sqlalchemy does)
-with open(join(dirname(__file__), 'ipn-py', '__init__.py')) as v_file:
+with open(join(dirname(__file__), 'ipnpy', '__init__.py')) as v_file:
     package_version = re. \
         compile(r".*__version__ = '(.*?)'", re.S). \
         match(v_file.read()). \
