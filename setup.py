@@ -21,7 +21,7 @@ setup(
     name="ipnpy",
     version=package_version,
     author="IPN Team",
-    author_email="sherbakovdaniil6@gmail.com",
+    author_email="ipncode@gmail.com",
     description="IPN Python 3.9+ Library",
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
