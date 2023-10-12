@@ -1,5 +1,5 @@
-pydantic==2.4.1
-web3==6.10.0
-base58==2.1.1
-tronpy==0.4.0
-requests==2.31.0
+pydantic>=2.4.1
+web3>=6.10.0
+base58>=2.1.1
+tronpy>=0.4.0
+requests>=2.31.0

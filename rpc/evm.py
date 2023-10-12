@@ -81,7 +81,7 @@ class EvmJsonRPC:
                           private_key: str,
                           from_address: str,
                           to_address: str,
-                          amount: float) -> str:
+                          amount: int) -> str:
         """
         Using the transfer, sends the native currency to another address
 
@@ -98,7 +98,7 @@ class EvmJsonRPC:
             'chainId': self._w3.eth.chain_id,
             'from': valid_from_address,
             'to': self._w3.to_checksum_address(to_address),
-            'value': int(Web3.to_wei(amount, 'ether')),
+            'value': amount,
             'nonce': nonce,
             'gasPrice': self._w3.eth.gas_price,
             'gas': 21000,
