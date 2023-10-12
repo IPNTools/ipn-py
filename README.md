@@ -1,8 +1,8 @@
 #  ![img.png](https://ipntest.alfaline.dev/img/log_in/header_logo.svg)
 <hr/>
 
-![image](https://img.shields.io/pypi/v/ipn-pi.svg)
-![image](https://img.shields.io/pypi/pyversions/ipn-py.svg)
+![image](https://img.shields.io/pypi/v/ipnpy.svg)
+![image](https://img.shields.io/pypi/pyversions/ipnpy.svg)
 
 A modern, easy-to-use library for interacting with the [IPN](https://ipn.tools/), written in Python.
 <hr/>
@@ -29,7 +29,7 @@ To install the development version, do the following:
 
 ```bash
 git clone https://github.com/IPNTools/ipn-py
-cd ipnpy
+cd ipn-py
 ```
 
 ## Quick Example
