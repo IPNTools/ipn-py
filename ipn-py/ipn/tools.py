@@ -61,7 +61,7 @@ class IPNTools:
         response = requests.delete(API_URL, json=body)
         return self._response_analise(response)
 
-    def replace_address(self, addresses: List[str]) -> AddressList:
+    def replace_addresses(self, addresses: List[str]) -> AddressList:
         """
         Replaces the entire existing list of addresses with the selected one
 
