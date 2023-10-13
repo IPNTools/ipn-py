@@ -61,4 +61,4 @@ class ERC20:
         :param address: wallet address
         :return: the balance of the selected wallet
         """
-        return self._functions.balanceOf(address).call()
+        return self._functions.balanceOf(self._w3.to_checksum_address(address)).call()
