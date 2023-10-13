@@ -14,5 +14,5 @@ __all__ = [
 
 from ipnpy.contracts import TRC20, ERC20
 from ipnpy.exceptions import ValidationError, ConnectionError, BadRequestError
-from ipnpy.schemes import WebhookData
 from ipnpy.ipn import IPNTools
+from ipnpy.schemes import WebhookData

@@ -3,5 +3,5 @@ __all__ = [
     'ERC20'
 ]
 
-from ipnpy.contracts.tron import TRC20
 from ipnpy.contracts.eth import ERC20
+from ipnpy.contracts.tron import TRC20

@@ -1,5 +1,7 @@
 import json
+
 from web3 import Web3
+
 from ipnpy.contracts.eth.abi import ERC20_ABI
 
 
