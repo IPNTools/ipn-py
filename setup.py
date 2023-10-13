@@ -1,5 +1,4 @@
 import re
-from os.path import join, dirname
 from setuptools import setup, find_packages
 
 # reading package version (same way the sqlalchemy does)

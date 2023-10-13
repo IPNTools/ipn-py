@@ -1,8 +1,8 @@
 from typing import Optional, Union
 from web3 import Web3
-from contracts.eth.token import ERC20
-from rpc.enums import RpcUrl
-from exceptions import ConnectionError
+from ipnpy.contracts.eth.token import ERC20
+from ipnpy.rpc.enums import RpcUrl
+from ipnpy.exceptions import ConnectionError
 
 
 class EvmJsonRPC:

@@ -1,6 +1,6 @@
 import json
 from web3 import Web3
-from contracts.eth.abi import ERC20_ABI
+from ipnpy.contracts.eth.abi import ERC20_ABI
 
 
 class ERC20:

@@ -1,6 +1,6 @@
 from typing import List
 from pydantic import BaseModel, Field
-from schemes.enums import WebhookEventType
+from ipnpy.schemes.enums import WebhookEventType
 
 
 class Log(BaseModel):

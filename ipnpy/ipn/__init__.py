@@ -1,5 +1,5 @@
-from .tools import IPNTools
-
 __all__ = [
     'IPNTools'
 ]
+
+from ipnpy.ipn.tools import IPNTools

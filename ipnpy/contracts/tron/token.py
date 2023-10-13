@@ -5,7 +5,7 @@ from tronpy import Tron
 from tronpy.keys import PrivateKey
 from tronpy.tron import TAddress
 
-from contracts.tron.abi import TRC20_ABI
+from ipnpy.contracts.tron.abi import TRC20_ABI
 
 
 class TRC20:

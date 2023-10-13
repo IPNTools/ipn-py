@@ -4,4 +4,4 @@ __all__ = [
     "ValidationError",
 ]
 
-from exceptions.exceptions import ConnectionError, BadRequestError, ValidationError
+from ipnpy.exceptions.exceptions import ConnectionError, BadRequestError, ValidationError
