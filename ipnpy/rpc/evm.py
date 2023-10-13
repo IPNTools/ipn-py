@@ -1,8 +1,10 @@
 from typing import Optional, Union
+
 from web3 import Web3
+
 from ipnpy.contracts.eth.token import ERC20
-from ipnpy.rpc.enums import RpcUrl
 from ipnpy.exceptions import ConnectionError
+from ipnpy.rpc.enums import RpcUrl
 
 
 class EvmJsonRPC:
@@ -22,8 +24,8 @@ class EvmJsonRPC:
     def get_erc20_balance(self,
                           address: str,
                           contract_address: str,
-                          raw: bool = False
-                          ) -> float:
+                          raw: bool = True
+                          ) -> Union[int, float]:
         """
         Get the balance of the ERC20 token in the EVM network.
 
@@ -43,8 +45,8 @@ class EvmJsonRPC:
 
     def get_native_balance(self,
                            address: str,
-                           raw: bool = False
-                           ) -> float:
+                           raw: bool = True
+                           ) -> Union[int, float]:
         """
         Get the native balance in EVM network
 

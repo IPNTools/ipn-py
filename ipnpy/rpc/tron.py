@@ -1,7 +1,9 @@
+from typing import Union
+
 from _decimal import Decimal
 from tronpy import Tron
-from tronpy.providers import HTTPProvider
 from tronpy.keys import PrivateKey
+from tronpy.providers import HTTPProvider
 
 from ipnpy.contracts.tron.token import TRC20
 from ipnpy.exceptions import ConnectionError
@@ -32,7 +34,7 @@ class TronJsonRPC:
     def get_trc20_balance(self,
                           address: str,
                           contract_address: str,
-                          raw: bool = False) -> float:
+                          raw: bool = True) -> Union[int, float]:
         """
         Get the balance of the ERC20 token in the tron network.
 
@@ -50,7 +52,7 @@ class TronJsonRPC:
 
         return balance
 
-    def get_native_balance(self, address: str, raw: bool = False) -> Decimal:
+    def get_native_balance(self, address: str, raw: bool = True) -> Decimal:
         """
         Get the native balance in tron network
 
@@ -60,7 +62,7 @@ class TronJsonRPC:
         """
         balance = self._client.get_account_balance(address)
         if raw:
-            balance *= 10 ** 6
+            balance = int(balance * 10 ** 6)
         return balance
 
     def send_trc20_token(self,
