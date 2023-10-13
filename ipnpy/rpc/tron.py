@@ -3,8 +3,8 @@ from tronpy import Tron
 from tronpy.providers import HTTPProvider
 from tronpy.keys import PrivateKey
 
-from contracts.tron.token import TRC20
-from exceptions import ConnectionError
+from ipnpy.contracts.tron.token import TRC20
+from ipnpy.exceptions import ConnectionError
 
 
 class TronJsonRPC:

@@ -1,6 +1,5 @@
-from .token import TRC20
-
-
 __all__ = [
     'TRC20'
 ]
+
+from ipnpy.contracts.tron.token import TRC20
