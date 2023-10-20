@@ -10,6 +10,7 @@ class RpcUrl(Enum):
     MATIC = 'https://poly-rpc.gateway.pokt.network'
     ETHEREUM = 'https://rpc.mevblocker.io'
     BINANCE = 'https://bsc-dataseed.binance.org/'
+    TRON = 'https://api.trongrid.io/'
 
     def __str__(self) -> str:
         return self.value
