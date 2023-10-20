@@ -7,7 +7,7 @@ from tronpy.providers import HTTPProvider
 
 from ipnpy.contracts.tron.token import TRC20
 from ipnpy.exceptions import ConnectionError
-from rpc.enums import RpcUrl
+from ipnpy.rpc.enums import RpcUrl
 
 
 class TronJsonRPC:
