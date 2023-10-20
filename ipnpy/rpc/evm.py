@@ -1,4 +1,4 @@
-from typing import Optional, Union
+from typing import Union
 
 from web3 import Web3
 
@@ -8,7 +8,7 @@ from ipnpy.rpc.enums import RpcUrl
 
 
 class EvmJsonRPC:
-    def __init__(self, rpc_url: Optional[Union[RpcUrl, str]]) -> None:
+    def __init__(self, rpc_url: Union[RpcUrl, str]) -> None:
         """
         A class for interacting with EVM networks. You can use the RPC_URL class to connect, or take the address for
         example https://chainlist.org

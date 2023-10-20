@@ -7,16 +7,17 @@ from tronpy.providers import HTTPProvider
 
 from ipnpy.contracts.tron.token import TRC20
 from ipnpy.exceptions import ConnectionError
+from rpc.enums import RpcUrl
 
 
 class TronJsonRPC:
-    def __init__(self, network: str = 'https://api.shasta.trongrid.io'):
+    def __init__(self, rpc_url: Union[RpcUrl, str]):
         """
         A class for interacting with tron networks.
 
         :param network: the address to connect to the RPC. By default, the test network is selected
         """
-        self._client = Tron(HTTPProvider(endpoint_uri=network))
+        self._client = Tron(HTTPProvider(endpoint_uri=rpc_url))
         if not self.is_connected():
             raise ConnectionError('Error connecting')
 
