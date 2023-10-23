@@ -9,7 +9,7 @@ from requests import Response
 from ipnpy.exceptions import ValidationError, ConnectionError, BadRequestError
 from ipnpy.schemes.ipn_api import Wallet, AddressList
 
-API_URL = 'http://94.198.218.9:8100/upd_addr'
+API_URL = 'https://ipn.tools/api/upd_addr'
 
 
 class IPNTools:
